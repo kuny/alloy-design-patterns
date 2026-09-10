@@ -49,7 +49,7 @@ pred append [c1, c2: Collection, e: Element] {
     not contains[c1, e]
 
     // postconditions
-    c2.contains[e]
+    contains[c2, e]
 }
 
 assert next_returns_valid_element {
