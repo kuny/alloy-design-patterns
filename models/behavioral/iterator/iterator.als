@@ -11,23 +11,20 @@ module iterator/iterator
 // https://en.wikipedia.org/wiki/Iterator_pattern
 //
 
-sig Element {}
-
-sig Collection {
-    items: seq Element
-}
+open iterator/element
+open iterator/Collection
 
 sig Iterator {
     target: one Collection,
     index: one Int
 }
 
-// hasNext()
+// Iterator.hasNext()
 pred has_next [it: Iterator] {
     it.index >= 0 and it.index < #it.target.items
 }
 
-// next()
+// Iterator.next()
 pred next [it1, it2: Iterator, elem: Element] {
     // preconditons
     has_next[it1]
@@ -38,19 +35,6 @@ pred next [it1, it2: Iterator, elem: Element] {
     it2.index = it1.index + 1
 }
 
-// contains(Element e)
-pred contains [c: Collection, e: Element] {
-    some i: c.items.inds | c.items[i] = e
-}
-
-// append(Element e)
-pred append [c1, c2: Collection, e: Element] {
-    // preconditions
-    not contains[c1, e]
-
-    // postconditions
-    contains[c2, e]
-}
 
 assert next_returns_valid_element {
     all it1, it2: Iterator, e: Element |
@@ -60,9 +44,3 @@ assert next_returns_valid_element {
         }
 }
 check next_returns_valid_element for 6
-
-assert append_after_contains_true {
-    all c1, c2: Collection, e: Element |
-        append[c1, c2, e] => contains[c2, e]
-}
-check append_after_contains_true for 6
