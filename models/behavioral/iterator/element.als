@@ -1,3 +1,3 @@
-module iterator/element
+module behavioral/iterator/element
 
 sig Element {}

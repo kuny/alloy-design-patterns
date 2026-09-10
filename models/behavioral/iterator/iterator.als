@@ -1,4 +1,4 @@
-module iterator/iterator
+module behavioral/iterator/iterator
 
 //
 // Iterator pattern
@@ -11,8 +11,8 @@ module iterator/iterator
 // https://en.wikipedia.org/wiki/Iterator_pattern
 //
 
-open iterator/element
-open iterator/Collection
+open behavioral/iterator/element
+open behavioral/iterator/Collection[Element]
 
 sig Iterator {
     target: one Collection,
