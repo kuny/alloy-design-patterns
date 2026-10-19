@@ -39,6 +39,12 @@ pred seek[c: Collection, e: E, i: Int] {
     e = c.items[i]
 }
 
+// Collection.count()
+pred count[c: Collection, l: Int] {
+    // postconditions
+    l = #c.items
+}
+
 
 assert append_after_contains_true {
     all c1, c2: Collection, e: E |

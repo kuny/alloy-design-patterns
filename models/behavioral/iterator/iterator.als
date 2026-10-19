@@ -1,4 +1,4 @@
-module behavioral/iterator/iterator
+module behavioral/iterator/iterator[E]
 
 //
 // Iterator pattern
@@ -11,8 +11,7 @@ module behavioral/iterator/iterator
 // https://en.wikipedia.org/wiki/Iterator_pattern
 //
 
-open behavioral/iterator/element
-open behavioral/iterator/Collection[Element]
+open behavioral/iterator/Collection[E]
 
 sig Iterator {
     target: one Collection,
@@ -25,7 +24,7 @@ pred has_next [it: Iterator] {
 }
 
 // Iterator.next()
-pred next [it1, it2: Iterator, elem: Element] {
+pred next [it1, it2: Iterator, elem: E] {
     // preconditons
     has_next[it1]
 
@@ -35,9 +34,17 @@ pred next [it1, it2: Iterator, elem: Element] {
     it2.index = it1.index + 1
 }
 
+// Iterator.reset()
+pred reset [it1, it2: Iterator] {
+    // preconditions
+    it1.index > 0
+
+    // postconditions
+    it2.index = 0
+}
 
 assert next_returns_valid_element {
-    all it1, it2: Iterator, e: Element |
+    all it1, it2: Iterator, e: E |
         next[it1, it2, e] => {
             e in it1.target.items.elems
             it2.index = it1.index + 1
